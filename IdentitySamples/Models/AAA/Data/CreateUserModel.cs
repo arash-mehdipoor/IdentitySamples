@@ -17,5 +17,8 @@ namespace IdentitySamples.Models.AAA.Data
 
         [Required]
         public string Password { get; set; }
+
+        [Required]
+        public string CodeMeli { get; set; }
     }
 }

@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace IdentitySamples.Models.Services
 {
-    public class UserNameNotInPasswordValidator : IPasswordValidator<IdentityUser>
+    public class UserNameNotInPasswordValidator : IPasswordValidator<ApplicationUser>
     {
-        public virtual async Task<IdentityResult> ValidateAsync(UserManager<IdentityUser> manager, IdentityUser user, string password)
+        public virtual async Task<IdentityResult> ValidateAsync(UserManager<ApplicationUser> manager, ApplicationUser user, string password)
         {
             var errors = new List<IdentityError>();
             if (password.Contains(user.UserName))
@@ -33,7 +33,7 @@ namespace IdentitySamples.Models.Services
         {
             this.dbContext = dbContext;
         }
-        public override async Task<IdentityResult> ValidateAsync(UserManager<IdentityUser> manager, IdentityUser user, string password)
+        public override async Task<IdentityResult> ValidateAsync(UserManager<ApplicationUser> manager, ApplicationUser user, string password)
         {
             var result = await base.ValidateAsync(manager, user, password);
             var errors = result.Succeeded ? new List<IdentityError>() : result.Errors.ToList();

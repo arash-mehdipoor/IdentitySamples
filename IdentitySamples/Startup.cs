@@ -29,7 +29,7 @@ namespace IdentitySamples
         {
             services.AddControllersWithViews();
             services.AddDbContext<AAADbContext>(c => c.UseSqlServer(Configuration.GetConnectionString("AAACnn")));
-            services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<AAADbContext>();
+            services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<AAADbContext>();
             services.Configure<IdentityOptions>(c =>
             {
                 c.Password.RequireDigit = false;
@@ -37,12 +37,12 @@ namespace IdentitySamples
                 c.Password.RequireUppercase = false;
                 c.Password.RequireNonAlphanumeric = false;
                 c.Password.RequiredLength = 4;
-                c.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyz";
+                //c.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyz";
                 c.User.RequireUniqueEmail = true;
             });
 
-            services.AddTransient<IPasswordValidator<IdentityUser>, BlackListPasswordValidator>();
-            services.AddTransient<IUserValidator<IdentityUser>, CustomUserValidator>();
+            services.AddTransient<IPasswordValidator<ApplicationUser>, BlackListPasswordValidator>();
+            services.AddTransient<IUserValidator<ApplicationUser>, CustomUserValidator>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace IdentitySamples.Models.AAA.Data
 {
-    public class AAADbContext : IdentityDbContext<IdentityUser>
+    public class AAADbContext : IdentityDbContext<ApplicationUser>
     {
         public DbSet<BlackListPasswordItem> blackListPasswordItems { get; set; }
         public AAADbContext(DbContextOptions options) : base(options)

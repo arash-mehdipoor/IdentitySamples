@@ -10,9 +10,9 @@ namespace IdentitySamples.Controllers
 {
     public class UsersController : Controller
     {
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public UsersController(UserManager<IdentityUser> userManager)
+        public UsersController(UserManager<ApplicationUser> userManager)
         {
             _userManager = userManager;
         }
@@ -33,16 +33,17 @@ namespace IdentitySamples.Controllers
         {
             if (ModelState.IsValid)
             {
-                var identityUser = new IdentityUser()
+                var identityUser = new ApplicationUser()
                 {
                     UserName = model.UserName,
-                    Email = model.Email
+                    Email = model.Email,
+                    CodeMeli = model.CodeMeli
                 };
                 var result = await _userManager.CreateAsync(identityUser, model.Password);
                 if (result.Succeeded)
                 {
                     TempData["Message"] = "User Created";
-                    return RedirectToAction("Index","Users");
+                    return RedirectToAction("Index", "Users");
                 }
                 else
                 {
@@ -53,6 +54,21 @@ namespace IdentitySamples.Controllers
                 }
             }
             return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> Delete(string id)
+        {
+            var user = await _userManager.FindByIdAsync(id);
+            var result = await _userManager.DeleteAsync(user);
+            if (result.Succeeded)
+            {
+                TempData["SuccessMessage"] = "User Created";
+            }
+            else
+            {
+                TempData["FaildMessage"] = "Faild Delete";
+            }
+            return RedirectToAction("Index", "Users");
         }
     }
 }

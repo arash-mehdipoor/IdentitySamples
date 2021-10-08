@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace IdentitySamples.Models.Services
 {
-    public class CustomUserValidator : UserValidator<IdentityUser>
+    public class CustomUserValidator : UserValidator<ApplicationUser>
     {
-        public override async Task<IdentityResult> ValidateAsync(UserManager<IdentityUser> manager, IdentityUser user)
+        public override async Task<IdentityResult> ValidateAsync(UserManager<ApplicationUser> manager, ApplicationUser user)
         {
             var result = await base.ValidateAsync(manager, user);
             var errors = result.Succeeded ? new List<IdentityError>() : result.Errors.ToList();

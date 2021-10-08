@@ -1,4 +1,4 @@
-﻿@model List<ApplicationUser>
+﻿@model List<IdentityRole>
 
 @{
     ViewData["Title"] = "Home Page";
@@ -19,11 +19,8 @@ else if (TempData["FaildMessage"] != null)
 <table class="table table-bordered table-secondary">
     <thead>
         <tr>
-            <th scope="col">UserId</th>
-            <th scope="col">UserName</th>
-            <th scope="col">Email</th>
-            <th scope="col">CodeMeli</th>
-            <th scope="col">operations</th>
+            <th scope="col">RoleId</th>
+            <th scope="col">RoleName</th>
         </tr>
     </thead>
     <tbody>
@@ -37,9 +34,7 @@ else if (TempData["FaildMessage"] != null)
             {
                 <tr>
                     <td>@item.Id</td>
-                    <td>@item.UserName</td>
-                    <td>@item.Email</td>
-                    <td>@item.CodeMeli</td>
+                    <td>@item.Name</td>
                     <td>
                         <form asp-action="Delete" asp-controller="Users" method="post">
                             <input type="hidden" value="@item.Id" name="id" />
@@ -52,4 +47,4 @@ else if (TempData["FaildMessage"] != null)
     </tbody>
 </table>
 
-<a asp-action="Create" asp-controller="Users" class="btn btn-success">Create User</a>
+<a asp-action="Create" asp-controller="Roles" class="btn btn-success">Create Role</a>
