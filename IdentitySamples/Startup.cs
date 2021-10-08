@@ -1,4 +1,5 @@
 using IdentitySamples.Models.AAA.Data;
+using IdentitySamples.Models.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -37,6 +38,8 @@ namespace IdentitySamples
                 c.Password.RequireNonAlphanumeric = false;
                 c.Password.RequiredLength = 4;
             });
+
+            services.AddTransient<IPasswordValidator<IdentityUser>, BlackListPasswordValidator>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

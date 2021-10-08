@@ -10,6 +10,7 @@ namespace IdentitySamples.Models.AAA.Data
 {
     public class AAADbContext : IdentityDbContext<IdentityUser>
     {
+        public DbSet<BlackListPasswordItem> blackListPasswordItems { get; set; }
         public AAADbContext(DbContextOptions options) : base(options)
         {
         }
