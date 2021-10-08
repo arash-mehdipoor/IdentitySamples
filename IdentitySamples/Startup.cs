@@ -29,6 +29,14 @@ namespace IdentitySamples
             services.AddControllersWithViews();
             services.AddDbContext<AAADbContext>(c => c.UseSqlServer(Configuration.GetConnectionString("AAACnn")));
             services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<AAADbContext>();
+            services.Configure<IdentityOptions>(c =>
+            {
+                c.Password.RequireDigit = false;
+                c.Password.RequireLowercase = false;
+                c.Password.RequireUppercase = false;
+                c.Password.RequireNonAlphanumeric = false;
+                c.Password.RequiredLength = 4;
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
