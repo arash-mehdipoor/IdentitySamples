@@ -37,9 +37,12 @@ namespace IdentitySamples
                 c.Password.RequireUppercase = false;
                 c.Password.RequireNonAlphanumeric = false;
                 c.Password.RequiredLength = 4;
+                c.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyz";
+                c.User.RequireUniqueEmail = true;
             });
 
             services.AddTransient<IPasswordValidator<IdentityUser>, BlackListPasswordValidator>();
+            services.AddTransient<IUserValidator<IdentityUser>, CustomUserValidator>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
