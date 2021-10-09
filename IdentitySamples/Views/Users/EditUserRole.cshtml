@@ -1,0 +1,16 @@
+﻿@model EditUserRoleViewModel
+
+<h1>@Model.UserName</h1>
+
+<form asp-action="EditUserRole" asp-controller="Users" method="post">
+    <input type="hidden" asp-for="@Model.UserId" />
+    @foreach (var item in Model.Roles)
+    {
+        <div class="form-group">
+            <input type="checkbox" name="roles" value="@item.Name" checked="@Model.UserRoles.Any(c => c == item.Name)" />
+            @item.Name
+        </div>
+    }
+    <input type="submit" class="btn btn-success" value="Create" />
+    <input type="button" class="btn btn-danger" value="Reset" />
+</form>

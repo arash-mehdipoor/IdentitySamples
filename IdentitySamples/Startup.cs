@@ -27,6 +27,7 @@ namespace IdentitySamples
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            
             services.AddControllersWithViews();
             services.AddDbContext<AAADbContext>(c => c.UseSqlServer(Configuration.GetConnectionString("AAACnn")));
             services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<AAADbContext>();
@@ -62,7 +63,7 @@ namespace IdentitySamples
             app.UseStaticFiles();
 
             app.UseRouting();
-
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
