@@ -19,7 +19,7 @@ namespace IdentitySamples.Controllers
             _userManager = userManager;
             _roleManager = roleManager;
         }
-        [Authorize]
+        [Authorize("AdminUsers")]
         public IActionResult Index()
         {
             var users = _userManager.Users.ToList();

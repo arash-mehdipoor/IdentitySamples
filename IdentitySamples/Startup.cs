@@ -1,5 +1,6 @@
 using IdentitySamples.Models.AAA.Data;
 using IdentitySamples.Models.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -15,6 +16,26 @@ using System.Threading.Tasks;
 
 namespace IdentitySamples
 {
+    public class UserIsInRoleRequirement:IAuthorizationRequirement
+    {
+        private readonly string role;
+
+        public UserIsInRoleRequirement(string role)
+        {
+            this.role = role;
+        }
+    }
+    public class UserIsInRoleRequirementHandLer : AuthorizationHandler<UserIsInRoleRequirement>
+    {
+        protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, UserIsInRoleRequirement requirement)
+        {
+            if (context.User.IsInRole("Admin"))
+            {
+                context.Succeed(requirement);
+            }
+            return Task.CompletedTask;
+        }
+    }
     public class Startup
     {
         public Startup(IConfiguration configuration)
@@ -27,7 +48,15 @@ namespace IdentitySamples
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            
+            services.AddSingleton<IAuthorizationHandler, UserIsInRoleRequirementHandLer>();
+            services.AddAuthorization(c =>
+            {
+                c.AddPolicy("AdminUsers", c =>
+                {
+                    //c.RequireRole("Admin");
+                    c.Requirements.Add(new UserIsInRoleRequirement("Admin"));
+                });
+            });
             services.AddControllersWithViews();
             services.AddDbContext<AAADbContext>(c => c.UseSqlServer(Configuration.GetConnectionString("AAACnn")));
             services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<AAADbContext>();
